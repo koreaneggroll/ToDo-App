@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
+#include <ctype.h>
 
 
 //DEFINES
@@ -50,12 +50,14 @@ int main(void){
 
     while(true){
 
-        printf("\t1. Show To Do list\n");
+        printf("\n\n\t1. Show To Do list\n");
         printf("\t2. New To Do\n");
-        printf("\t3. Delete To DO\n");
+        printf("\t3. Delete To Do\n");
         printf("\t4. EXIT\n");
         printf("\tChoice> ");
         scanf("%d", &choice);
+
+        
 
         switch(choice){
             case 1:
@@ -68,10 +70,12 @@ int main(void){
                 //TODO
                 break;
             case 4:
-                //TODO
                 exit(1);
             default:
-                printf("\tInvalid choice\n");
+                if (!isdigit(choice)){
+                    printf ("\n\n\n\tERR: Please enter a valid number\n\n\n");
+                    exit(1);
+                }
                 exit(1);
         }
     }
@@ -98,6 +102,11 @@ void create_todo(){
 
         if(c == 'n'){
             break;
+        }
+
+        if(c != 'n' || c != 'N' || c != 'y' || c != 'Y'){
+            printf("\n\n\n\tERR: Only enter 'y' or 'n'\n\n\n");
+            exit(1);
         }
 
         else{
