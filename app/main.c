@@ -16,6 +16,7 @@
 //PROTOTYPES
 void interface();
 void create_todo();
+void del_todo();
 void see_todo();
 void adjust_count();
 void todo_to_file();
@@ -67,7 +68,7 @@ int main(void){
                 create_todo();
                 break;
             case 3:
-                //TODO
+                del_todo();
                 break;
             case 4:
                 exit(1);
@@ -94,27 +95,28 @@ void create_todo(){
 
     //if 'n' is pressed it breaks out of the loop
     while(true){
-        printf("\tWant to add a new To Do? \n");
-        printf("\tPress 'y' for yes and 'n' for no\n");
+        printf("\tWant to add a new To Do? Press 'y' for yes and 'n' for no\n");
 
+        sleep(1);
         //GETS INPUT
         scanf("%c", &c);
 
         if(c == 'n'){
             break;
         }
-
-        if(c != 'n' || c != 'N' || c != 'y' || c != 'Y'){
-            printf("\n\n\n\tERR: Only enter 'y' or 'n'\n\n\n");
-            exit(1);
+        else if(c != 'y'){
+            printf("Please only enter 'y' and 'n'");
+            continue;
         }
+
+
+
 
         else{
 
             if(start == NULL){
 
-                printf("\tWant to add a new To Do? \n");
-                printf("\tPress 'y' for yes and 'n' for no\n");
+                printf("\tWant to add a new To Do? Press 'y' for yes and 'n' for no \n");
 
                 //GETS INPUT
                 scanf("%c", &c);
@@ -151,8 +153,7 @@ void create_todo(){
 
             else{
 
-                printf("\tWant to add a new To Do? \n");
-                printf("\tPress 'y' for yes and 'n' for no\n");
+                printf("\tWant to add a new To Do? Press 'y' for yes and 'n' for no\n");
 
                 //GETS INPUT
                 scanf("%c", &c);
@@ -184,6 +185,55 @@ void create_todo(){
             adjust_count();
         }
     }
+
+    printf("\n\n\n");
+}
+
+
+
+void del_todo(){
+    clear();
+
+    if(start == NULL){
+        printf("\n\n\n\tERR: No To Do's\n\n\n");
+    }
+
+    int x;
+
+    todo *del, *tmp;
+    printf("\n\tEnter To Do's number: \n");
+    
+    scanf("%d", &x);
+
+    del = start;
+
+    tmp = start->next;
+
+    while(true){
+        if(del->count == x){
+            start = start->next;
+
+            free(del);
+
+            adjust_count();
+            break;
+        }
+
+        if(tmp->count == x){
+            del->next = tmp->next;
+            free(tmp);
+            adjust_count();
+            break;
+        }
+
+        else{
+            del = tmp;
+            tmp = tmp->next;
+        }
+    }
+
+    printf("\n\n\n\n");
+
 }
 
 
