@@ -14,6 +14,9 @@
 
 //PROTOTYPES
 void interface();
+void createtodo();
+void adjustcount();
+
 
 //data
 typedef struct ToDo todo;
@@ -71,6 +74,12 @@ int main(void){
 
 
 
+void createtodo(){
+
+}
+
+
+
 void interface() 
 {  
     printf("\n\n\n\n"); 
@@ -105,4 +114,17 @@ void interface()
     // presses any key 
     
 } 
-  
+
+
+
+void adjustcount(){
+    todo* temp;
+    int i = 1;
+    temp = start;
+
+    while(temp != NULL){
+        temp->count = i;
+        i++;
+        temp = temp->next;
+    }
+}
