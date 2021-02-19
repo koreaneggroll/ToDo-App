@@ -117,6 +117,11 @@ void create_todo(){
 
                 add = (todo*)calloc(1, sizeof(todo));
 
+                if(add == NULL){
+                    printf("\n\n\n\tERR: Coudn't allocate memory\n\n\n");
+                    exit(1);
+                }
+
                 start = add;
                 printf("\tTO DO...\n");
 
@@ -150,7 +155,10 @@ void create_todo(){
 
                 tmp = (todo*)calloc(1, sizeof(todo));
 
-                
+                if(tmp == NULL){
+                    printf("\n\n\n\tERR: Couldn't allocate memory\n\n\n\n");
+                    exit(1);
+                }
 
                 printf("\tTO DO...\n");
 
