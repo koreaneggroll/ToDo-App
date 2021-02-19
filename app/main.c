@@ -15,8 +15,10 @@
 
 //PROTOTYPES
 void interface();
-void createtodo();
-void adjustcount();
+void create_todo();
+void see_todo();
+void adjust_count();
+void todo_to_file();
 
 
 //data
@@ -40,10 +42,11 @@ todo* start = NULL;
 
 //main program
 int main(void){
-    short choice;
-    interface();
+    int choice;
 
     clear();
+
+    interface();
 
     while(true){
 
@@ -52,14 +55,14 @@ int main(void){
         printf("\t3. Delete To DO\n");
         printf("\t4. EXIT\n");
         printf("\tChoice> ");
-        scanf("%hi", &choice);
+        scanf("%d", &choice);
 
         switch(choice){
             case 1:
-                //TODO
+                see_todo();
                 break;
             case 2:
-                //TODO
+                create_todo();
                 break;
             case 3:
                 //TODO
@@ -77,7 +80,7 @@ int main(void){
 
 
 
-void createtodo(){
+void create_todo(){
     //choice
     char c;
 
@@ -87,10 +90,8 @@ void createtodo(){
 
     //if 'n' is pressed it breaks out of the loop
     while(true){
-        printf("Want to add a new To Do? \n");
-        printf("Press 'y' for yes and 'n' for no\n");
-        printf("Choice> ");
-        fflush(stdin);
+        printf("\tWant to add a new To Do? \n");
+        printf("\tPress 'y' for yes and 'n' for no\n");
 
         //GETS INPUT
         scanf("%c", &c);
@@ -98,39 +99,61 @@ void createtodo(){
         if(c == 'n'){
             break;
         }
+
         else{
+
             if(start == NULL){
-                add = (todo*)calloc(1, sizeof(todo));
+                add = (todo*)malloc(sizeof(todo));
 
                 start = add;
-                printf("TO DO...\n");
+                printf("\tTO DO...\n");
 
-                fflush(stdin);
-                gets(add->buffer);
+                fgets(add->buffer, 255, stdin);
 
                 add->count = 1;
 
                 start->next = NULL;
 
+                todo_to_file();
             }
 
             else{
-                temp = (todo*)calloc(1, sizeof(todo));
-                printf("TO DO...\n");
-                fflush(stdin);
-                gets(temp->buffer);
+                temp = (todo*)malloc(sizeof(todo));
+                printf("\tTO DO...\n");
+
+                fgets(temp->buffer, 255, stdin);
 
                 temp->next = NULL;
 
                 add->next = temp;
                 add = add->next;
+
+                todo_to_file();
             }
 
-            adjustcount();
+            adjust_count();
         }
     }
 }
 
+
+
+void see_todo(){
+
+    clear();
+
+    todo* tmp = start;
+
+    if(start = NULL){
+        printf("The todo list is empty\n");
+    }
+
+    while(tmp != NULL){
+        printf("%d. %s", tmp->count, tmp->buffer);
+
+        tmp = tmp->next;
+    }
+}
 
 
 void interface() 
@@ -163,14 +186,12 @@ void interface()
            "~~~~~~~~~~\n"); 
     printf("\n\n\n");
   
-    // Pausing screen until user 
-    // presses any key 
     
 } 
 
 
 
-void adjustcount(){
+void adjust_count(){
     todo* temp;
     int i = 1;
     temp = start;
