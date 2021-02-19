@@ -85,7 +85,7 @@ void create_todo(){
     char c;
 
     //pointers
-    todo *add, *temp;
+    todo *add, *tmp;
     clear();
 
     //if 'n' is pressed it breaks out of the loop
@@ -103,32 +103,65 @@ void create_todo(){
         else{
 
             if(start == NULL){
-                add = (todo*)malloc(sizeof(todo));
+
+                printf("\tWant to add a new To Do? \n");
+                printf("\tPress 'y' for yes and 'n' for no\n");
+
+                //GETS INPUT
+                scanf("%c", &c);
+
+                if(c == 'n'){
+                    break;
+                }
+
+
+                add = (todo*)calloc(1, sizeof(todo));
 
                 start = add;
                 printf("\tTO DO...\n");
 
                 fgets(add->buffer, 255, stdin);
 
+
+                if(tmp->buffer == NULL){
+                    printf("The to do taks can't be empty\n");
+                    continue;
+                }
+
                 add->count = 1;
 
                 start->next = NULL;
 
-                todo_to_file();
+
             }
 
             else{
-                temp = (todo*)malloc(sizeof(todo));
+
+                printf("\tWant to add a new To Do? \n");
+                printf("\tPress 'y' for yes and 'n' for no\n");
+
+                //GETS INPUT
+                scanf("%c", &c);
+
+                if(c == 'n'){
+                    break;
+                }
+
+
+                tmp = (todo*)calloc(1, sizeof(todo));
+
+                
+
                 printf("\tTO DO...\n");
 
-                fgets(temp->buffer, 255, stdin);
+                fgets(tmp->buffer, 255, stdin);
 
-                temp->next = NULL;
+                tmp->next = NULL;
 
-                add->next = temp;
+                add->next = tmp;
                 add = add->next;
 
-                todo_to_file();
+
             }
 
             adjust_count();
@@ -145,14 +178,16 @@ void see_todo(){
     todo* tmp = start;
 
     if(start = NULL){
-        printf("The todo list is empty\n");
+        printf("\tThe todo list is empty\n");
     }
 
     while(tmp != NULL){
-        printf("%d. %s", tmp->count, tmp->buffer);
+        printf("\t%d. %s", tmp->count, tmp->buffer);
 
         tmp = tmp->next;
     }
+
+    printf("\n\n\n\n\n\n\n");
 }
 
 
